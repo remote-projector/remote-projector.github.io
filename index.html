@@ -195,14 +195,19 @@ function writeOnCharacteristic(value){
 }
 
 function disconnectDevice() {
-    console.log("Disconnect Device.");
-    if (bleServer && bleServer.connected) {
-    } else {
-        
-        console.error("Bluetooth is not connected.");
-        window.alert("Bluetooth is not connected.")
+        console.log("Disconnect Device.");
+        if (bleServer && bleServer.connected) {
+          console.log("Device Disconnected");
+          bleStateContainer.innerHTML = "Device Disconnected";
+          bleStateContainer.style.color = "#d13a30";
+          console.log("Notifications Stopped");
+          return bleServer.disconnect();
+        } else {
+            // Throw an error if Bluetooth is not connected
+            console.error("Bluetooth is not connected.");
+            window.alert("Bluetooth is not connected.")
+        }
     }
-}
 
 // Add event listeners to handle clicks
 document.getElementById("power").addEventListener("click", function() { writeOnCharacteristic(0x1D); });
